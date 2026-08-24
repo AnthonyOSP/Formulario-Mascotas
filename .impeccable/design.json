@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-24T00:00:00Z",
+  "title": "Design System: Registro de Mascotas",
+  "extensions": {
+    "colorMeta": {
+      "granate": { "role": "primary", "displayName": "Granate Institucional", "canonical": "#7c1f2c" },
+      "granate-fuerte": { "role": "primary-hover", "displayName": "Granate Fuerte", "canonical": "#591620" },
+      "granate-suave": { "role": "primary-tint", "displayName": "Granate Suave", "canonical": "#f2e2df" },
+      "granate-tinta": { "role": "on-primary", "displayName": "Tinta sobre Granate", "canonical": "#fff6ed" },
+      "papel": { "role": "neutral-bg", "displayName": "Papel", "canonical": "#f4efe3" },
+      "hoja": { "role": "neutral-surface", "displayName": "Hoja", "canonical": "#fbf8f1" },
+      "tinta": { "role": "neutral-text", "displayName": "Tinta", "canonical": "#2a2118" },
+      "tinta-suave": { "role": "neutral-text-soft", "displayName": "Tinta Suave", "canonical": "#5a4c3c" },
+      "raya": { "role": "neutral-border", "displayName": "Raya de Libro", "canonical": "#d9cbab" },
+      "raya-fuerte": { "role": "neutral-border-strong", "displayName": "Raya Fuerte", "canonical": "#c3b291" },
+      "error": { "role": "error", "displayName": "Rust de Error", "canonical": "#96392a" }
+    },
+    "typographyMeta": {
+      "rotulo": { "displayName": "Rótulo", "purpose": "Encabezados, etiquetas de campo, navegación, botones." },
+      "cuerpo": { "displayName": "Cuerpo", "purpose": "Párrafos y texto de listado." },
+      "folio": { "displayName": "Folio", "purpose": "Números de folio y fechas únicamente — dato, no decoración." }
+    },
+    "shadows": [
+      { "name": "shadow-sheet", "value": "0 10px 24px -18px rgba(42,33,24,0.45), 0 2px 6px -2px rgba(42,33,24,0.18)", "purpose": "Levanta la ficha y el CTA de portada como una hoja sobre el mostrador; nunca se usa en tabla, cabecera o footer." }
+    ],
+    "motion": [
+      { "name": "sello-transition", "value": "150ms cubic-bezier(0.2, 0.7, 0.3, 1)", "purpose": "Hover/press de botones tipo sello (transform + background)." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón Presentar",
+      "kind": "button",
+      "refersTo": "button-presentar",
+      "description": "Botón primario de envío dentro de la ficha; ancho completo, esquinas casi rectas.",
+      "html": "<button class=\"ds-btn-presentar\">Presentar</button>",
+      "css": ".ds-btn-presentar { width: 100%; background: #7c1f2c; border: 1px solid #591620; color: #fff6ed; font-weight: 700; letter-spacing: 0.02em; padding: 0.65rem 1rem; border-radius: 2px; transition: background 150ms ease, transform 150ms cubic-bezier(0.2,0.7,0.3,1); } .ds-btn-presentar:hover { background: #591620; } .ds-btn-presentar:active { transform: translateY(1px); } .ds-btn-presentar:focus-visible { outline: 2px solid #2a2118; outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón Sello (CTA)",
+      "kind": "button",
+      "refersTo": "button-sello",
+      "description": "CTA de portada en forma de pill/sello, con sombra de hoja.",
+      "html": "<a class=\"ds-btn-sello\" href=\"#\">Ir al libro de registro</a>",
+      "css": ".ds-btn-sello { display: inline-flex; align-items: center; gap: 0.6rem; background: #7c1f2c; color: #fff6ed; border: 1px solid #591620; border-radius: 999px; padding: 0.75rem 1.6rem; font-weight: 700; text-decoration: none; box-shadow: 0 10px 24px -18px rgba(42,33,24,0.45), 0 2px 6px -2px rgba(42,33,24,0.18); transition: transform 150ms cubic-bezier(0.2,0.7,0.3,1), background 150ms ease; } .ds-btn-sello:hover { background: #591620; transform: translateY(-1px); }"
+    },
+    {
+      "name": "Campo de ficha",
+      "kind": "input",
+      "refersTo": "ficha-field",
+      "description": "Input/select dentro de la ficha, con etiqueta en versalitas y estado de error marcado por forma, no solo color.",
+      "html": "<div class=\"ds-campo\"><label>Nombre</label><input class=\"ds-input\" type=\"text\" /></div>",
+      "css": ".ds-campo label { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: #5a4c3c; margin-bottom: 0.35rem; } .ds-input { background: #f4efe3; border: 1px solid #c3b291; border-radius: 2px; color: #2a2118; padding: 0.55rem 0.75rem; font-family: 'Public Sans', sans-serif; } .ds-input:focus { border-color: #7c1f2c; box-shadow: 0 0 0 3px #f2e2df; background: #fbf8f1; outline: none; } .ds-input.ds-invalid { border-style: dashed; border-color: #96392a; }"
+    },
+    {
+      "name": "Fila de libro (folio)",
+      "kind": "custom",
+      "refersTo": "tabla-libro-row",
+      "description": "Fila de la tabla de registro; la celda de folio es la única en Courier Prime.",
+      "html": "<tr class=\"ds-fila\"><td class=\"ds-folio\">N.° 0001</td><td>Firulais</td></tr>",
+      "css": ".ds-fila td { padding: 0.65rem 0.9rem; border-bottom: 1px solid #d9cbab; color: #2a2118; } .ds-fila:hover td { background: #f2e2df; } .ds-folio { font-family: 'Courier Prime', monospace; color: #7c1f2c; font-weight: 700; white-space: nowrap; }"
+    },
+    {
+      "name": "Cabecera institucional",
+      "kind": "nav",
+      "refersTo": "usmp-header",
+      "description": "Barra granate de ancho completo con sello SVG, wordmark y navegación.",
+      "html": "<nav class=\"ds-header\"><span class=\"ds-brand\">Registro de Mascotas</span><a class=\"ds-nav-link ds-active\" href=\"#\">Mascotas</a></nav>",
+      "css": ".ds-header { background: #7c1f2c; color: #fff6ed; border-bottom: 3px solid #591620; padding: 0.6rem 1rem; display: flex; align-items: center; justify-content: space-between; } .ds-nav-link { color: #fff6ed; text-decoration: none; padding: 0.5rem 0.9rem; position: relative; } .ds-nav-link.ds-active::after { content: ''; position: absolute; left: 0.9rem; right: 0.9rem; bottom: 0.3rem; height: 2px; background: #fff6ed; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La mesa de partes universitaria",
+    "overview": "El sistema trata cada registro como un trámite real: la ficha (formulario) se presenta en un mostrador institucional y cada envío válido gana una fila numerada y sellada en el libro de registro (la tabla). No es una card de Bootstrap con bordes redondeados — es un documento oficial junto a un libro rayado, con el granate institucional de USMP como el único acento que marca 'esto es oficial'. La app inherita este mundo completo: cabecera, portada, formulario, listado y páginas de contenido comparten el mismo papel, tinta y granate.",
+    "keyCharacteristics": [
+      "Papel crema con raya de libro de fondo; tinta casi negra, nunca negro puro.",
+      "Un solo acento — granate institucional — que carga sellos, botones primarios y estados activos.",
+      "Public Sans para toda la interfaz; Courier Prime reservado para folios y fechas (dato, no decoración).",
+      "Radios casi rectos en documentos y campos; el único elemento circular/pill es el botón 'sello'."
+    ],
+    "rules": [
+      { "name": "La regla del acento único", "body": "El granate es el único color con carga semántica en toda la app; no se introduce un verde de éxito ni un azul de enlace distinto — el 'sello' (forma + granate) es la señal de éxito, no un nuevo matiz.", "section": "colors" },
+      { "name": "La regla de la marca, no el color", "body": "Los estados de error nunca dependen solo del granate ni de un rojo genérico: usan un rust distinto (#96392a) y un borde punteado en vez de sólido, para no depender del color como única señal.", "section": "colors" },
+      { "name": "La regla del dato mecanografiado", "body": "Courier Prime aparece únicamente donde el contenido es un dato medible (folio, fecha, contador) — nunca como decoración 'técnica' en titulares o botones.", "section": "typography" },
+      { "name": "La regla de la hoja única", "body": "Solo los elementos que representan un documento físico (la ficha, el CTA tipo sello) llevan sombra; la tabla, la cabecera y el footer nunca la usan.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do mantener el granate como único acento con carga semántica (botones primarios, folios, estados activos); todo lo demás vive en papel/tinta.",
+      "Do usar Courier Prime solo para datos medibles (folio, fecha), nunca para titulares o cuerpo.",
+      "Do marcar los estados de error con forma (borde punteado + '✕') además de color, no solo con el color de error.",
+      "Do mantener las esquinas casi rectas (2–3px) en todo lo que representa un documento; reservar el pill/círculo para el sello y el CTA de portada."
+    ],
+    "donts": [
+      "Don't introducir un segundo acento de color (verde de éxito, azul de enlace distinto) — rompe la regla del acento único.",
+      "Don't usar Courier Prime como 'voz técnica' decorativa fuera de folios/fechas.",
+      "Don't agregar sombras a la tabla, la cabecera o el footer — la sombra es exclusiva de las superficies tipo 'hoja' (ficha, CTA).",
+      "Don't apilar cards genéricas de icono + título + texto para futuras secciones; cualquier panel nuevo hereda el lenguaje de 'ficha' o 'libro', no un card shell neutro."
+    ]
+  }
+}

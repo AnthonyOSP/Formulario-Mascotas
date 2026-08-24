@@ -1,5 +1,41 @@
+/* ============================================================
+   Registro de Mascotas — USMP
+   Dirección: "Mesa de partes universitaria" (ver comentario de
+   contrato en Views/Shared/_Layout.cshtml). El granate institucional
+   de abajo es una aproximación razonable a la identidad de USMP,
+   no un valor de manual de marca verificado — reemplázalo por el
+   Pantone/hex oficial en cuanto lo tengas; todo lo demás cuelga de
+   estas variables.
+   ============================================================ */
+
+:root {
+  /* -- papel / tinta -- */
+  --color-ground: #f4efe3;       /* papel del libro de registro */
+  --color-sheet: #fbf8f1;        /* la ficha, un poco más clara que el fondo */
+  --color-ink: #2a2118;          /* tinta principal */
+  --color-ink-soft: #5a4c3c;     /* tinta secundaria, aún ≥4.5:1 sobre el papel */
+  --color-rule: #d9cbab;         /* líneas del libro rayado */
+  --color-rule-strong: #c3b291;
+
+  /* -- granate institucional (aproximación USMP) -- */
+  --color-accent: #7c1f2c;
+  --color-accent-strong: #591620;
+  --color-accent-soft: #f2e2df;
+  --color-accent-ink: #fff6ed;   /* texto sobre granate */
+
+  /* -- estado de error: distinto en matiz Y en forma, no solo color -- */
+  --color-error: #96392a;
+
+  /* -- tipografía -- */
+  --font-label: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Courier Prime", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius-sheet: 3px;
+  --shadow-sheet: 0 10px 24px -18px rgba(42, 33, 24, 0.45), 0 2px 6px -2px rgba(42, 33, 24, 0.18);
+}
+
 html {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 @media (min-width: 768px) {
@@ -8,24 +44,463 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+  margin: 0;
+  padding-bottom: 64px;
+  background: var(--color-ground);
+  background-image:
+    linear-gradient(var(--color-rule) 1px, transparent 1px);
+  background-size: 100% 2.15rem;
+  background-position: 0 8.5rem;
+  color: var(--color-ink);
+  font-family: var(--font-label);
+  -webkit-font-smoothing: antialiased;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* the ledger ruling only reads once real content sits on it */
+main {
+  background: transparent;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ground);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-rule-strong);
+  border-radius: 999px;
+  border: 3px solid var(--color-ground);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+a:hover {
+  color: var(--color-accent-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-label);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+p, li {
+  color: var(--color-ink-soft);
+  max-width: 68ch;
+}
+
+/* ============================================================
+   Cabecera institucional — la "mesa de partes" nunca se ve, pero
+   su cabecera sí: la barra granate marca el mostrador oficial.
+   ============================================================ */
+
+.usmp-header {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  border-bottom: 3px solid var(--color-accent-strong);
+}
+
+.usmp-header .navbar-brand,
+.usmp-header .nav-link {
+  color: var(--color-accent-ink) !important;
+}
+
+.usmp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-label);
+  font-weight: 700;
+  white-space: normal;
+  text-align: left !important;
+  word-break: normal !important;
+}
+
+.usmp-seal {
+  flex: none;
+  display: block;
+}
+
+.usmp-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.usmp-brand-text .usmp-mark {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.usmp-brand-text .usmp-site {
+  font-size: 1.05rem;
+}
+
+.usmp-header .nav-link {
+  position: relative;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.9rem !important;
+}
+
+.usmp-header .nav-link.active {
+  font-weight: 700;
+}
+
+.usmp-header .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.3rem;
+  height: 2px;
+  background: var(--color-accent-ink);
+}
+
+.usmp-header .navbar-toggler {
+  border-color: rgba(255, 246, 237, 0.5);
+}
+.usmp-header .navbar-toggler-icon {
+  filter: invert(1) grayscale(1) brightness(2);
+}
+
+/* ============================================================
+   Portada (Home)
+   ============================================================ */
+
+.registro-portada {
+  padding: 3.5rem 0 2.5rem;
+}
+
+.registro-portada h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  max-width: 18ch;
+}
+
+.registro-portada .lead {
+  color: var(--color-ink-soft);
+  max-width: 55ch;
+  font-size: 1.05rem;
+}
+
+.sello-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  border: 1px solid var(--color-accent-strong);
+  border-radius: 999px;
+  padding: 0.75rem 1.6rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-sheet);
+  transition: transform 150ms cubic-bezier(0.2, 0.7, 0.3, 1), background 150ms ease;
+}
+.sello-btn:hover {
+  background: var(--color-accent-strong);
+  color: var(--color-accent-ink);
+  transform: translateY(-1px);
+}
+.sello-btn:active {
+  transform: translateY(0);
+}
+
+.registro-nota {
+  margin-top: 2.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--color-rule-strong);
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+}
+
+/* ============================================================
+   La ficha (formulario) — un documento oficial sobre el mostrador
+   ============================================================ */
+
+.ficha {
+  background: var(--color-sheet);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--shadow-sheet);
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ficha h2 {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0.6rem 1.25rem;
+}
+
+.ficha-body {
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.ficha .campo {
+  margin-bottom: 1.1rem;
+}
+
+.ficha label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-bottom: 0.35rem;
+}
+
+.ficha .form-control,
+.ficha .form-select {
+  background: var(--color-ground);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 2px;
+  color: var(--color-ink);
+  padding: 0.55rem 0.75rem;
+  font-family: var(--font-label);
+}
+
+.ficha .form-control::placeholder {
+  color: var(--color-ink-soft);
+  opacity: 1;
+}
+
+.ficha .form-control:focus,
+.ficha .form-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  background: var(--color-sheet);
+}
+
+.ficha .form-control.is-invalid,
+.ficha .form-select.is-invalid {
+  border-style: dashed;
+  border-color: var(--color-error);
+  background-image: none;
+}
+
+.ficha .invalid-feedback,
+.ficha .field-validation-error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+.ficha .invalid-feedback::before,
+.ficha .field-validation-error::before {
+  content: "✕ ";
+  font-family: var(--font-mono);
+}
+
+.ficha .validation-summary-errors {
+  border: 1px dashed var(--color-error);
+  background: transparent;
+  color: var(--color-error);
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 1.1rem;
+  font-size: 0.85rem;
+}
+.ficha .validation-summary-errors ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.btn-presentar {
+  width: 100%;
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent-strong);
+  color: var(--color-accent-ink);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1rem;
+  border-radius: 2px;
+  transition: background 150ms ease, transform 150ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.btn-presentar:hover {
+  background: var(--color-accent-strong);
+  color: var(--color-accent-ink);
+}
+.btn-presentar:active {
+  transform: translateY(1px);
+}
+.btn-presentar:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   El libro de registro (listado) — tabla rayada con folios
+   ============================================================ */
+
+.libro {
+  background: var(--color-sheet);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-sheet);
+  overflow: hidden;
+}
+
+.libro-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem 0.85rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.libro-cabecera h2 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.libro-cabecera .libro-conteo {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.libro-vacio {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+}
+.libro-vacio .libro-vacio-linea {
+  display: block;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-rule-strong) 0,
+    var(--color-rule-strong) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  margin: 0 auto 1rem;
+  max-width: 220px;
+}
+
+.tabla-libro-wrap {
+  overflow-x: auto;
+}
+
+.tabla-libro {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.tabla-libro thead th {
+  text-align: left;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  background: var(--color-accent-soft);
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--color-rule-strong);
+  white-space: nowrap;
+}
+
+.tabla-libro tbody td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink);
+  vertical-align: middle;
+}
+
+.tabla-libro tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-libro tbody tr:hover td {
+  background: var(--color-accent-soft);
+}
+
+.folio {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabla-libro .col-tipo {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Pie institucional
+   ============================================================ */
+
+.usmp-footer {
+  border-top: 1px solid var(--color-rule-strong);
+  background: var(--color-ground);
+  color: var(--color-ink-soft);
+  padding: 0.9rem 0;
+  font-size: 0.82rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.usmp-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.usmp-footer a {
+  color: var(--color-ink-soft);
+}
+
+/* ============================================================
+   Read: Privacidad y otras páginas de contenido
+   ============================================================ */
+
+.pagina-lectura {
+  max-width: 68ch;
+  padding-top: 1rem;
+}
+.pagina-lectura h1 {
+  border-bottom: 1px solid var(--color-rule-strong);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
 }
