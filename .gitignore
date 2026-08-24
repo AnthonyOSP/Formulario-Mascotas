@@ -1,0 +1,40 @@
+## .NET / Visual Studio / VS Code
+
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options
+.vs/
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# MSBuild / build logs
+*.binlog
+*.log
+
+# macOS
+.DS_Store
+
+# Environment / secrets
+*.env
+appsettings.*.local.json
